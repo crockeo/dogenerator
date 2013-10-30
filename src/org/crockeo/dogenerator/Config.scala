@@ -5,7 +5,7 @@ import java.io.File
 
 object Config {
   // Render font size
-  val fontSize: Float = 24f
+  val fontSize: Float = 32f
   
   // The location of the font
   val fontLocation: String = "res/fonts/ComicSans.ttf"

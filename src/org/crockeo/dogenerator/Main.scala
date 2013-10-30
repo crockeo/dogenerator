@@ -1,13 +1,23 @@
 package org.crockeo.dogenerator
 
+import org.crockeo.dogenerator.gui.Window
 import org.crockeo.dogenerator.geom.Point
 
 import java.awt.Color
 
 object Main extends App {
-  val input = "res/imgs/doge2.jpg"
-  val output = "res/imgs/output.png"
+  val test = true 
+  
+  if (!test) Window
+  else {
+    val sourceImage = "res/imgs/doge3.jpg"
+    val destinImage = "res/imgs/output.png"
+    val words: List[String] = List(
+        "wow",
+        "such test",
+        "very antialias"
+    )
     
-  val img = IO.loadImage(input)
-  IO.saveImage(ImageWriter.write(List("wow", "such good", "very program", "indeed", "doge"), img), output)
+    IO.saveImage(ImageWriter.write(words, IO.loadImage(sourceImage)), destinImage)
+  }
 }

@@ -1,9 +1,8 @@
 package org.crockeo.dogenerator
 
 import org.crockeo.dogenerator.geom.{Point, Rectangle}
-
 import java.awt.image.BufferedImage
-import java.awt.{Graphics2D, Color, Font}
+import java.awt.{RenderingHints, Graphics2D, Color, Font}
 import java.io.File
 
 object ImageWriter {
@@ -12,6 +11,8 @@ object ImageWriter {
     val (text, pos, color) = trip
     val g = image.getGraphics.asInstanceOf[Graphics2D]
     
+    g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+                       RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
     g.setFont(Config.font)
     g.setColor(color)
     g.drawString(text, pos.x, pos.y)
