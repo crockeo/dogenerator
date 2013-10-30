@@ -1,0 +1,15 @@
+# Ignoring all compiled files
+*.sc
+*.jar
+*.class
+*.exe
+*.o
+
+# Ignoring Eclipse files
+.settings
+.cache
+.classpath
+.project
+
+# Ignoring the test output image
+output.png
