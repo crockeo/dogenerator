@@ -7,6 +7,7 @@
 
 # Ignoring Eclipse files
 .settings
+.worksheet
 .cache
 .classpath
 .project
