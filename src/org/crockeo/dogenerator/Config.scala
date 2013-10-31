@@ -14,7 +14,13 @@ object Config {
   val font: Font = Font.createFont(Font.TRUETYPE_FONT, new File(fontLocation)).deriveFont(fontSize)
   
   // Available colors
-  val colors: List[Color] = List(Color.cyan, Color.yellow, Color.magenta)
+  val colors: List[Color] = List(
+      Color.cyan,              // Cyan
+      Color.yellow,            // Yellow
+      Color.magenta,           // Magenta
+      new Color(37, 34, 220),  // Blue
+      new Color(191, 89, 25),  // Orange
+      new Color(215, 18, 108)) // Pink
   
   // Render margin for the border
   val borderMargin: Int = 4

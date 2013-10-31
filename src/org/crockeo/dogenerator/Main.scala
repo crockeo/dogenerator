@@ -15,7 +15,10 @@ object Main extends App {
     val words: List[String] = List(
         "wow",
         "such test",
-        "very antialias"
+        "very antialias",
+        "new color",
+        "much orange",
+        "very color"
     )
     
     IO.saveImage(ImageWriter.write(words, IO.loadImage(sourceImage)), destinImage)
