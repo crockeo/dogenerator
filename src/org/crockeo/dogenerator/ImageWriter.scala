@@ -26,26 +26,18 @@ object ImageWriter {
   
   // The front end for writing a list of texts to the screen
   def write(texts: List[String], image: BufferedImage): BufferedImage = {
-    def genUntilNoCollide: List[Point] = {
-      val genPairs: List[(Point, Rectangle)] =
-        texts.map(a => Random.randomPoint(a, new Point(image.getWidth, image.getHeight), image.getGraphics))
-      def anyCollide: Boolean =
-        (for { a <- genPairs
-        	   b <- genPairs
-        } yield a._2.intersects(b._2)).reduceLeft((a, b) => a && b)
-        
-      if (anyCollide) genUntilNoCollide
-      else            genPairs.map(a => a._1)
-    }
+    def toLength[T](l: List[T], target: Int): List[T] =
+      if (l.length >= target) l.take(target)
+      else                    toLength(l ++ l, target)
     
-    def genTrips: List[(String, Point, Color)] = {
-      def genTripsRaw(pairs: List[(String, Point)], n: Int): List[(String, Point, Color)] =
-        if (n >= Config.colors.length) genTripsRaw(pairs, 0)
-        else if (pairs.isEmpty)        List()
-        else                           (pairs.head._1, pairs.head._2, Config.colors(n)) +: genTripsRaw(pairs.tail, n + 1)
-      genTripsRaw(texts.zip(genUntilNoCollide).toList, 0)
-    }
+    def genTrips(ls: List[String], ps: List[Point], cs: List[Color]): List[(String, Point, Color)] =
+      if (ls.length == ps.length && ps.length == cs.length) (for (n <- 0 until ls.length)
+                                                             yield (ls(n), ps(n), cs(n))).toList
+      else throw new Exception("List lengths do not match.")
     
-    writeTextList(genTrips, image)
+    writeTextList(genTrips(texts,
+                           Random.randomValidPoints(texts, new Point(image.getWidth, image.getHeight), image.getGraphics).map(a => a._1),
+                           toLength(Config.colors, texts.length)),
+                  image)
   }
 }
