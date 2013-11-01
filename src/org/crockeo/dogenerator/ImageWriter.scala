@@ -35,9 +35,6 @@ object ImageWriter {
                                                              yield (ls(n), ps(n), cs(n))).toList
       else throw new Exception("List lengths do not match.")
     
-    writeTextList(genTrips(texts,
-                           Random.randomValidPoints(texts, new Point(image.getWidth, image.getHeight), image.getGraphics).map(a => a._1),
-                           toLength(Config.colors, texts.length)),
-                  image)
+    writeTextList(genTrips(texts, Generator.generatePoints(texts, image), toLength(Config.colors, texts.length)), image)
   }
 }

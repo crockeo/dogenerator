@@ -23,7 +23,7 @@ object Config {
       new Color(215, 18, 108)) // Pink
   
   // Render margin for the border
-  val borderMargin: Int = 4
+  val borderMargin: Int = 16
   
   // Doge directory
   val dogeDirectory: String = "res/imgs/"
