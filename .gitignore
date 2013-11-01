@@ -12,5 +12,8 @@
 .classpath
 .project
 
+# Sbt files
+target/
+
 # Ignoring the test output image
 output.png
