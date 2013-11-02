@@ -11,35 +11,65 @@ object Panel extends JPanel {
   private object PanelListener extends ActionListener {
     override def actionPerformed(e: ActionEvent): Unit = {
       e.getSource match {
-        case `srcImageLoc`  => ???
-        case `dstImageLoc`  => ???
-        case `words`        => ???
+        case `srcImageLoc`  => return
+        case `dstImageLoc`  => return
+        case `words`        => return
         case `createButton` => IO.saveImage(ImageWriter.write(words.getText.split(",").toList, IO.loadImage(srcImageLoc.getText)), dstImageLoc.getText)
       }
     }
   }
   
+  override def getPreferredSize: Dimension =
+    new Dimension(300, 200)
+
   private val srcImageLoc : JTextArea = new JTextArea("Source image")
   private val dstImageLoc : JTextArea = new JTextArea("Destination image.")
   private val words       : JTextArea = new JTextArea("Words (split by commas)")
   private val createButton: JButton   = new JButton("Create")
   
   def init: Unit = {
-    srcImageLoc.setSize(50, 15)
-    add(srcImageLoc)
+    setLayout(new GridBagLayout)
+    val c: GridBagConstraints = new GridBagConstraints
+
+    c.fill = GridBagConstraints.HORIZONTAL
+
+    // srcImageLoc
+    c.gridx      = 0
+    c.gridy      = 0
+    c.weightx    = 0.5
+    c.weighty    = 0.3
+    c.gridwidth  = 1
+    c.gridheight = 1
+    add(srcImageLoc, c)
     
-    dstImageLoc.setMinimumSize(new Dimension(50, 15))
-    add(dstImageLoc)
+    // dstImageLoc
+    c.gridx      = 1
+    c.gridy      = 0
+    c.weightx    = 0.5
+    c.weighty    = 0.3
+    c.gridwidth  = 1
+    c.gridheight = 1
+    add(dstImageLoc, c)
     
-    add(words)
+    // words
+    c.gridx      = 0
+    c.gridy      = 1
+    c.weightx    = 1
+    c.weighty    = 0.3
+    c.gridwidth  = 2
+    c.gridheight = 1
+    add(words, c)
     
+    // createButton
+    c.gridx      = 0
+    c.gridy      = 2
+    c.weightx    = 1
+    c.weighty    = 0.3
+    c.gridwidth  = 2
+    c.gridheight = 1
     createButton.addActionListener(PanelListener)
-    add(createButton)
+    add(createButton, c)
   }
-  
-  def create: Unit =
-    setVisible(true)
-  
+
   init
-  create
 }
