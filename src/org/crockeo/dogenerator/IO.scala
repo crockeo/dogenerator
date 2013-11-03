@@ -12,4 +12,8 @@ object IO {
   // Writing a file
   def saveImage(bi: BufferedImage, fp: String): Unit =
     ImageIO.write(bi, "png", new File(fp))
+
+  // Performing the whole operation
+  def wholeOp(srcFile: String, dstFile: String, words: List[String]): Unit =
+    saveImage(ImageWriter.write(words, loadImage(srcFile)), dstFile)
 }
