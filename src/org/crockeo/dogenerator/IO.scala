@@ -16,4 +16,8 @@ object IO {
   // Performing the whole operation
   def wholeOp(srcFile: String, dstFile: String, words: List[String]): Unit =
     saveImage(ImageWriter.write(words, loadImage(srcFile)), dstFile)
+    
+  // Checking if a file path is valid
+  def isValid(fp: String): Boolean =
+    new File(fp).exists
 }

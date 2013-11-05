@@ -2,30 +2,69 @@ package org.crockeo.dogenerator.gui
 
 import org.crockeo.dogenerator.IO
 
+import javax.swing.JOptionPane.{showMessageDialog, ERROR_MESSAGE}
 import java.awt.Dimension
 import scala.swing._
 
-object ContentPanel extends GridPanel(2, 2) {
+object ContentPanel extends GridPanel(3, 2) {
+  private val actions: Map[String, Action] = Map(
+    "srcDialogButton" ->
+      new Action("...") {
+        def apply: Unit =
+          FileChooserDialog.chooseFile match {
+            case Some(s) => srcTextArea.text = s
+            case None    => return
+          }
+      },
+    "dstDialogButton" ->
+      new Action("...") {
+        def apply: Unit =
+          FileChooserDialog.chooseFile match {
+            case Some(s) => dstTextArea.text = s
+            case None    => return
+          }
+      },
+    "proceed" ->
+      new Action("Generate") {
+        def apply: Unit =
+          if (!IO.isValid(srcTextArea.text)) showMessageDialog(null, "The file path you entered is invalid.", "Invalid filepath.", ERROR_MESSAGE)
+          else                               IO.wholeOp(srcTextArea.text, dstTextArea.text, words.text.split(",").toList)
+      }
+  )
+  
   preferredSize = new Dimension(500, 200)
   
   hGap = 5
   vGap = 7
   
   // srcTextArea
-  val srcTextArea = new TextArea("Source location", 1, 64)
+  val srcTextArea = new PlaceholderTextField
+  srcTextArea.placeholder = "Source image location"
   contents += srcTextArea
   
   // dstTextArea
-  val dstTextArea = new TextArea("Output location", 1, 64)
+  val dstTextArea = new PlaceholderTextField
+  dstTextArea.placeholder = "Destination image location"
   contents += dstTextArea
   
+  // srcTextArea dialogButton
+  val srcDialogButton = new Button("...")
+  srcDialogButton.action = actions.apply("srcDialogButton")
+  contents += srcDialogButton
+  
+  // dstTextArea dialogButton
+  val dstDialogButton = new Button("...")
+  dstDialogButton.action = actions.apply("dstDialogButton")
+  contents += dstDialogButton
+  
   // words
-  val words       = new TextArea("Words (separated by commas)", 1, 1024)
+  val words       = new PlaceholderTextField
+  words.placeholder = "Words to be drawn (split by commas)"
   contents += words
   
   // proceed
   val proceed     = new Button
-  proceed.action = new Action("Generate") { def apply: Unit = IO.wholeOp(srcTextArea.text, dstTextArea.text, words.text.split(",").toList) }
+  proceed.action = actions.apply("proceed")
   contents += proceed
 
 }
