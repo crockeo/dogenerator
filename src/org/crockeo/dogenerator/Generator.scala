@@ -28,13 +28,7 @@ object Generator {
 
   // Generating a list of points
   def generatePoints(lines: List[String], image: BufferedImage): List[Point] = {
-    def generateBounds(n: Int): (Point, Point) = {
-      def largestCleanSquare(n: Int): Int = {
-        val lcs = Math.sqrt(n.toDouble).toInt
-        
-        lcs * lcs
-      }
-      
+    def generateBounds(n: Int): (Point, Point) = {      
       // Generating row widths
       def widths(a: Int, d: Int): List[Int] =
         if (a <= d) List(a)
@@ -50,9 +44,9 @@ object Generator {
         if (getRow(ws, n) == 0)              n - 1
         else                                      getCol(ws, n - ws.head)
       
-      val ws = widths(lines.length, Math.sqrt(lines.length).toInt)
+      val ws = widths(lines.length, MathUtils.cleanSqrt(lines.length))
       val (x, y) = (getCol(ws, n), getRow(ws, n))
-      val (w, h) = (imageSize(image).x / ws(getRow(ws, n)), imageSize(image).y / (ws.length))
+      val (w, h) = (imageSize(image).x / ws(x), imageSize(image).y / (ws.length))
       
       (new Point( x * w      , y * h),
        new Point((x * w) + w, (y * h) + h))
