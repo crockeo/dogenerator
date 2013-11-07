@@ -28,7 +28,11 @@ object ContentPanel extends GridPanel(3, 2) {
       new Action("Generate") {
         def apply: Unit =
           if (!IO.isValid(srcTextArea.text)) showMessageDialog(null, "The file path you entered is invalid.", "Invalid filepath.", ERROR_MESSAGE)
-          else                               IO.wholeOp(srcTextArea.text, dstTextArea.text, words.text.split(",").toList)
+          else                               try { IO.wholeOp(srcTextArea.text, dstTextArea.text, words.text.split(",").toList) }
+                                             catch {
+                                               case e: IllegalArgumentException => showMessageDialog(null, "The image you've loaded is too small for all of your words.", "Image too small", ERROR_MESSAGE)
+                                               case e: Exception => e.printStackTrace; System.exit(1)
+                                             }
       }
   )
   

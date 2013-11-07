@@ -23,6 +23,9 @@ object Generator {
         new Point(bounds._2.x - Config.borderMargin - size.x, bounds._2.y - Config.borderMargin - (size.y / 2))))
     }
     
+    val (diffX, diffY) = (maxBound.x - minBound.x, maxBound.y - minBound.y)
+    if (diffX < 0 || diffY < 0) throw new IllegalArgumentException("Image is too small for the prescribed words.")
+    
     new Point(r.nextInt(maxBound.x - minBound.x), r.nextInt(maxBound.y - minBound.y)) + minBound
   }
 
