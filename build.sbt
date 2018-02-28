@@ -4,4 +4,6 @@ version := "0.0.0"
 
 scalaVersion := "2.10.2"
 
-scalaSource in Compile := file("src/org/crockeo/dogenerator/")
+libraryDependencies += "org.scala-lang" % "scala-swing" % "2.10.2"
+
+scalaSource in Compile := baseDirectory.value / "src"
